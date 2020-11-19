@@ -50,9 +50,12 @@ class AddExpense : AppCompatActivity() {
             val description = editTextTextMultiLine.text
 
 //             clear inputs after hitting add
+            spinner.setSelection(0, true)
             editTextTextPersonName2.setText(" ")
             editTextNumberDecimal.setText(" ")
-//            editTextDate2.setText(" ")
+            spinner3.setSelection(0, true)
+            spinner4.setSelection(0, true)
+            spinner5.setSelection(0, true)
             editTextTextMultiLine.setText(" ")
 
             Toast.makeText(getApplicationContext(), "Expense added!", Toast.LENGTH_SHORT).show();
@@ -67,9 +70,12 @@ class AddExpense : AppCompatActivity() {
 //        TODO: clear the input boxes
         val clear = findViewById<View>(R.id.clearButton) as Button
         clear.setOnClickListener {
+            spinner.setSelection(0, true)
             editTextTextPersonName2.setText(" ")
             editTextNumberDecimal.setText(" ")
-//            editTextDate2.setText(" ")
+            spinner3.setSelection(0, true)
+            spinner4.setSelection(0, true)
+            spinner5.setSelection(0, true)
             editTextTextMultiLine.setText(" ")
             Toast.makeText(getApplicationContext(), "Info cleared", Toast.LENGTH_SHORT).show();
         }
