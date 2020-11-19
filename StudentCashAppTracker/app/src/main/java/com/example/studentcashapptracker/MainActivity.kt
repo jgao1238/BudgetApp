@@ -20,11 +20,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val editButton = findViewById<View>(R.id.editButton) as Button
-        editButton.setOnClickListener {
-//            val edit = Intent(this@MainActivity, EditInfo::class.java)
-//            startActivityForResult(edit,0)
-        }
+//         val editButton = findViewById<View>(R.id.editButton) as Button
+//         editButton.setOnClickListener {
+// //            val edit = Intent(this@MainActivity, EditInfo::class.java)
+// //            startActivityForResult(edit,0)
+//         }
 
         val addExpenseButton = findViewById<View>(R.id.addExpenseButton) as Button
         addExpenseButton.setOnClickListener {
