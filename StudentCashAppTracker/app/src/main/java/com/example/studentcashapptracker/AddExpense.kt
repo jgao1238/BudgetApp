@@ -42,9 +42,11 @@ class AddExpense : AppCompatActivity() {
 //        TODO: commit to a database
         val addExpense = findViewById<View>(R.id.addButton) as Button
         addExpense.setOnClickListener {
-            val category = editTextTextPersonName2.text
+            val category = spinner.selectedItem
             val cost = editTextNumberDecimal.text
-//            val date = editTextDate2.text
+            val month = spinner3.selectedItem
+            val day = spinner4.selectedItem
+            val year = spinner5.selectedItem
             val description = editTextTextMultiLine.text
 
 //             clear inputs after hitting add
