@@ -16,10 +16,58 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <activity android:name=".AddExpense">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Food">
+            <intent-filter>
+                <action android:name=".ExplicitlyLoadedActivity" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Health">
+            <intent-filter>
+                <action android:name=".ExplicitlyLoadedActivity" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Rent">
+            <intent-filter>
+                <action android:name=".ExplicitlyLoadedActivity" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Other">
+            <intent-filter>
+                <action android:name=".ExplicitlyLoadedActivity" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Car">
+            <intent-filter>
+                <action android:name=".ExplicitlyLoadedActivity" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".PreviousPeriods">
+            <intent-filter>
+                <action android:name=".ExplicitlyLoadedActivity" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
