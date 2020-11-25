@@ -64,8 +64,7 @@ class AddExpense : AppCompatActivity() {
 //        TODO: go back to main screen
         val cancel = findViewById<View>(R.id.cancelButton) as Button
         cancel.setOnClickListener {
-            val main = Intent(this@AddExpense, MainActivity::class.java)
-            startActivityForResult(main,0 )
+           finish()
         }
 //        TODO: clear the input boxes
         val clear = findViewById<View>(R.id.clearButton) as Button
