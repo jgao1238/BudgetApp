@@ -19,7 +19,7 @@
 
         <activity android:name=".AddExpense">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name=".ExplicitlyLoadedActivity" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

@@ -22,12 +22,12 @@ import kotlin.properties.Delegates
 
 //Overall task list
 //TODO: editing and deleting entries for time period
-//TODO: create ExpandableListView/display each entry for current time period
 //TODO: display history of periods
-//TODO: end tracking period
+//TODO: end tracking period (dialog window)
+//TODO: fill out HTML template + video
 
 //Do now
-//
+    //TODO: display entries for current time period/ExpandableListView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var build: AlertDialog.Builder
@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         val endPeriod = findViewById<View>(R.id.endTrackingPeriodButton) as Button
         endPeriod.setOnClickListener{
+            findViewById<TextView>(R.id.amountSpentValue).setText("0")
             trackPeriod += 1
             val editor = sharedpreferences.edit()
             editor.putInt("trackPeriod",trackPeriod)
