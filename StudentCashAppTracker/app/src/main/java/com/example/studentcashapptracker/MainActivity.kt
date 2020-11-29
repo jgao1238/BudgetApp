@@ -97,7 +97,13 @@ class MainActivity : AppCompatActivity() {
 
         val endPeriod = findViewById<View>(R.id.endTrackingPeriodButton) as Button
         endPeriod.setOnClickListener{
+            //Increase the tracking period for future records and reset the on screen values
             findViewById<TextView>(R.id.amountSpentValue).setText("0")
+            findViewById<Button>(R.id.foodButton).setText("Food: 0")
+            findViewById<Button>(R.id.rentButton).setText("Rent: 0")
+            findViewById<Button>(R.id.carButton).setText("Car: 0")
+            findViewById<Button>(R.id.healthButton).setText("Health: 0")
+            findViewById<Button>(R.id.otherButton).setText("Other: 0")
             trackPeriod += 1
             val editor = sharedpreferences.edit()
             editor.putInt("trackPeriod",trackPeriod)
@@ -108,6 +114,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         //Initializing the total summary at the top + update when we come back from add screen
+        var foodButton = findViewById<Button>(R.id.foodButton)
+        var rentButton = findViewById<Button>(R.id.rentButton)
+        var carButton = findViewById<Button>(R.id.carButton)
+        var healthButton = findViewById<Button>(R.id.healthButton)
+        var otherButton = findViewById<Button>(R.id.otherButton)
+
         var amtSpent = findViewById<TextView>(R.id.amountSpentValue)
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))
@@ -121,15 +133,31 @@ class MainActivity : AppCompatActivity() {
                 line = reader.readLine()
             }
             reader.close()
-            var mVal = 0
+            var mTotal = 0; var mFood = 0; var mRent = 0; var mCar = 0; var mHealth = 0; var mOther = 0;
             for(i in 0 until testing.length()){
                 val entry = testing.getJSONObject(i)
                 //There's going to be a lot of entries, so only add the current period's
                 if(entry.get("period").toString().toInt() == trackPeriod){
-                    mVal += entry.get("cost").toString().toInt()
+                    mTotal += entry.get("cost").toString().toInt()
+                    if(entry.get("category").toString() == "Car"){
+                        mCar += entry.get("cost").toString().toInt()
+                    } else if (entry.get("category").toString() == "Food") {
+                        mFood += entry.get("cost").toString().toInt()
+                    } else if (entry.get("category").toString() == "Rent") {
+                        mRent += entry.get("cost").toString().toInt()
+                    } else if (entry.get("category").toString() == "Health") {
+                        mHealth += entry.get("cost").toString().toInt()
+                    } else if (entry.get("category").toString() == "Other") {
+                        mOther += entry.get("cost").toString().toInt()
+                    }
                 }
-            }
-            amtSpent.text = mVal.toString()
+            } //Load the value into each button now
+            foodButton.setText("Food: " + mFood.toString())
+            rentButton.setText("Rent: " + mRent.toString())
+            carButton.setText("Car: " + mCar.toString())
+            healthButton.setText("Health: " + mHealth.toString())
+            otherButton.setText("Other: " + mOther.toString())
+            amtSpent.text = mTotal.toString()
         } catch(e: IOException){
             Log.i(TAG,"IOException")
         }

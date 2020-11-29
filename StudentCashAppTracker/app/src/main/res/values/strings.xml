@@ -3,8 +3,8 @@
 
     <string-array name="categories">
         <item>Car</item>
-        <item>Home</item>
-        <item>Utilities</item>
+        <item>Rent</item>
+        <item>Health</item>
         <item>Food</item>
         <item>Other</item>
     </string-array>
