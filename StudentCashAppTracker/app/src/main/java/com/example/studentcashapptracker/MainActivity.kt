@@ -1,8 +1,10 @@
 package com.example.studentcashapptracker
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,7 +25,6 @@ import kotlin.properties.Delegates
 //Overall task list
 //TODO: editing and deleting entries for time period
 //TODO: display history of periods
-//TODO: end tracking period (dialog window)
 //TODO: fill out HTML template + video
 
 //Do now
@@ -63,6 +64,12 @@ class MainActivity : AppCompatActivity() {
                     editor.putInt("budgetValue",budgetValue)
                     editor.putInt("budgetPos",budgetPos)
                     editor.apply()
+                    //Change the color if over budget
+                    if(findViewById<TextView>(R.id.amountSpentValue).text.toString().toInt() > sharedpreferences.getInt("budgetValue",0)){
+                        findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.RED)
+                    } else {
+                        findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.BLACK)
+                    }
                 } catch(e: Exception) {}
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -80,6 +87,12 @@ class MainActivity : AppCompatActivity() {
                 editor.putInt("budgetValue",budgetValue)
                 editor.putInt("budgetPos",budgetPos)
                 editor.apply()
+                //Change the color if over budget
+                if(findViewById<TextView>(R.id.amountSpentValue).text.toString().toInt() > sharedpreferences.getInt("budgetValue",0)){
+                    findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.RED)
+                } else {
+                    findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.BLACK)
+                }
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
             }
@@ -95,19 +108,30 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(addExpense,0)
         }
 
+        //Creates an alert dialog confirming that the user wants to end the tracking period
         val endPeriod = findViewById<View>(R.id.endTrackingPeriodButton) as Button
         endPeriod.setOnClickListener{
-            //Increase the tracking period for future records and reset the on screen values
-            findViewById<TextView>(R.id.amountSpentValue).setText("0")
-            findViewById<Button>(R.id.foodButton).setText("Food: 0")
-            findViewById<Button>(R.id.rentButton).setText("Rent: 0")
-            findViewById<Button>(R.id.carButton).setText("Car: 0")
-            findViewById<Button>(R.id.healthButton).setText("Health: 0")
-            findViewById<Button>(R.id.otherButton).setText("Other: 0")
-            trackPeriod += 1
-            val editor = sharedpreferences.edit()
-            editor.putInt("trackPeriod",trackPeriod)
-            editor.apply()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("End Tracking Period")
+            builder.setMessage("Are you sure you want to end this tracking period?")
+            builder.setCancelable(false)
+            builder.setPositiveButton("Accept", DialogInterface.OnClickListener{dialog, id ->
+                //Increase the tracking period for future records and reset the on screen values
+                findViewById<TextView>(R.id.amountSpentValue).setText("0")
+                findViewById<Button>(R.id.foodButton).setText("Food: $0")
+                findViewById<Button>(R.id.rentButton).setText("Rent: $0")
+                findViewById<Button>(R.id.carButton).setText("Car: $0")
+                findViewById<Button>(R.id.healthButton).setText("Health: $0")
+                findViewById<Button>(R.id.otherButton).setText("Other: $0")
+                trackPeriod += 1
+                val editor = sharedpreferences.edit()
+                editor.putInt("trackPeriod",trackPeriod)
+                editor.apply()
+                findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.BLACK)
+            })
+            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener{dialog, id ->
+            })
+            builder.create().show()
         }
 
     }
@@ -152,12 +176,18 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } //Load the value into each button now
-            foodButton.setText("Food: " + mFood.toString())
-            rentButton.setText("Rent: " + mRent.toString())
-            carButton.setText("Car: " + mCar.toString())
-            healthButton.setText("Health: " + mHealth.toString())
-            otherButton.setText("Other: " + mOther.toString())
+            foodButton.setText("Food: $" + mFood.toString())
+            rentButton.setText("Rent: $" + mRent.toString())
+            carButton.setText("Car: $" + mCar.toString())
+            healthButton.setText("Health: $" + mHealth.toString())
+            otherButton.setText("Other: $" + mOther.toString())
             amtSpent.text = mTotal.toString()
+            //if the amount spent is greater than budget, change color to red to draw attention
+            if(mTotal > sharedpreferences.getInt("budgetValue",0)){
+                amtSpent.setTextColor(Color.RED)
+            } else {
+                amtSpent.setTextColor(Color.BLACK)
+            }
         } catch(e: IOException){
             Log.i(TAG,"IOException")
         }
