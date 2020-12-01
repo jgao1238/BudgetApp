@@ -107,7 +107,38 @@ class MainActivity : AppCompatActivity() {
             addExpense.putExtra("trackPeriod",trackPeriod)
             startActivityForResult(addExpense,0)
         }
+        //        food button
+        val foodButton = findViewById<View>(R.id.foodButton) as Button
+        foodButton.setOnClickListener {
+            val food = Intent(this@MainActivity, Food::class.java)
+            startActivityForResult(food, 0)
+        }
+        //        car button
+        val carButton = findViewById<View>(R.id.carButton) as Button
+        carButton.setOnClickListener {
+            val car = Intent(this@MainActivity, Car::class.java)
+            startActivityForResult(car, 0)
+        }
 
+        //        other button
+        val otherButton = findViewById<View>(R.id.otherButton) as Button
+        otherButton.setOnClickListener {
+            val other = Intent(this@MainActivity, Other::class.java)
+            startActivityForResult(other, 0)
+        }
+        //        rent button
+        val rentButton = findViewById<View>(R.id.rentButton) as Button
+        rentButton.setOnClickListener {
+            val rent = Intent(this@MainActivity, Rent::class.java)
+            startActivityForResult(rent, 0)
+        }
+//                health button
+        val healthButton = findViewById<View>(R.id.healthButton) as Button
+        healthButton.setOnClickListener {
+            val health = Intent(this@MainActivity, Health::class.java)
+            startActivityForResult(health, 0)
+        }      
+        
         //Creates an alert dialog confirming that the user wants to end the tracking period
         val endPeriod = findViewById<View>(R.id.endTrackingPeriodButton) as Button
         endPeriod.setOnClickListener{
