@@ -105,32 +105,32 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(addExpense,0)
         }
 
-        //        food button
+        //food button
         val foodButton = findViewById<View>(R.id.foodButton) as Button
         foodButton.setOnClickListener {
             val food = Intent(this@MainActivity, Food::class.java)
             startActivityForResult(food, 0)
         }
-        //        car button
+        //car button
         val carButton = findViewById<View>(R.id.carButton) as Button
         carButton.setOnClickListener {
             val car = Intent(this@MainActivity, Car::class.java)
             startActivityForResult(car, 0)
         }
 
-        //        other button
+        //other button
         val otherButton = findViewById<View>(R.id.otherButton) as Button
         otherButton.setOnClickListener {
             val other = Intent(this@MainActivity, Other::class.java)
             startActivityForResult(other, 0)
         }
-        //        rent button
+        //rent button
         val rentButton = findViewById<View>(R.id.rentButton) as Button
         rentButton.setOnClickListener {
             val rent = Intent(this@MainActivity, Rent::class.java)
             startActivityForResult(rent, 0)
         }
-//                health button
+        //health button
         val healthButton = findViewById<View>(R.id.healthButton) as Button
         healthButton.setOnClickListener {
             val health = Intent(this@MainActivity, Health::class.java)
@@ -155,7 +155,11 @@ class MainActivity : AppCompatActivity() {
                 trackPeriod += 1
                 val editor = sharedpreferences.edit()
                 editor.putInt("trackPeriod",trackPeriod)
+                editor.putInt("budgetValue",0) //reset max budget value
+                editor.putInt("budgetPos",0) //reset seekBar position
                 editor.apply()
+                maxField.setText(0.toString()) //do the actual visual changes
+                maxBudget.setProgress(0)
                 findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.BLACK)
             })
             builder.setNegativeButton("Cancel", DialogInterface.OnClickListener{dialog, id ->
@@ -207,40 +211,10 @@ class MainActivity : AppCompatActivity() {
                 }
             } //Load the value into each button now
             foodButton.setText("Food: $" + mFood.toString())
-//            foodButton.setOnClickListener {
-//                var intent = Intent(this@MainActivity, Food::class.java)
-//                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-//                intent.putExtra("CATEGORY", "Food")
-//                startActivity(intent)
-//            }
             rentButton.setText("Rent: $" + mRent.toString())
-//            rentButton.setOnClickListener {
-//                var intent = Intent(this@MainActivity, Food::class.java)
-//                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-//                intent.putExtra("CATEGORY", "Rent")
-//                startActivity(intent)
-//            }
             carButton.setText("Car: $" + mCar.toString())
-//            carButton.setOnClickListener {
-//                var intent = Intent(this@MainActivity, Car::class.java)
-//                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-//                intent.putExtra("CATEGORY", "Car")
-//                startActivity(intent)
-//            }
             healthButton.setText("Health: $" + mHealth.toString())
-//            healthButton.setOnClickListener {
-//                var intent = Intent(this@MainActivity, Food::class.java)
-//                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-//                intent.putExtra("CATEGORY", "Health")
-//                startActivity(intent)
-//            }
             otherButton.setText("Other: $" + mOther.toString())
-//            otherButton.setOnClickListener {
-//                var intent = Intent(this@MainActivity, Food::class.java)
-//                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-//                intent.putExtra("CATEGORY", "Other")
-//                startActivity(intent)
-//            }
             amtSpent.text = mTotal.toString()
             //if the amount spent is greater than budget, change color to red to draw attention
             if(mTotal > sharedpreferences.getInt("budgetValue",0)){
