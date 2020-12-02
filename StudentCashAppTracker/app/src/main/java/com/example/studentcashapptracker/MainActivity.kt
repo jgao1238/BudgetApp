@@ -177,10 +177,40 @@ class MainActivity : AppCompatActivity() {
                 }
             } //Load the value into each button now
             foodButton.setText("Food: $" + mFood.toString())
+            foodButton.setOnClickListener {
+                var intent = Intent(this@MainActivity, Food::class.java)
+                intent.putExtra("TRACKING_PERIOD", trackPeriod)
+                intent.putExtra("CATEGORY", "Food")
+                startActivity(intent)
+            }
             rentButton.setText("Rent: $" + mRent.toString())
+            rentButton.setOnClickListener {
+                var intent = Intent(this@MainActivity, Food::class.java)
+                intent.putExtra("TRACKING_PERIOD", trackPeriod)
+                intent.putExtra("CATEGORY", "Rent")
+                startActivity(intent)
+            }
             carButton.setText("Car: $" + mCar.toString())
+            carButton.setOnClickListener {
+                var intent = Intent(this@MainActivity, Food::class.java)
+                intent.putExtra("TRACKING_PERIOD", trackPeriod)
+                intent.putExtra("CATEGORY", "Car")
+                startActivity(intent)
+            }
             healthButton.setText("Health: $" + mHealth.toString())
+            healthButton.setOnClickListener {
+                var intent = Intent(this@MainActivity, Food::class.java)
+                intent.putExtra("TRACKING_PERIOD", trackPeriod)
+                intent.putExtra("CATEGORY", "Health")
+                startActivity(intent)
+            }
             otherButton.setText("Other: $" + mOther.toString())
+            otherButton.setOnClickListener {
+                var intent = Intent(this@MainActivity, Food::class.java)
+                intent.putExtra("TRACKING_PERIOD", trackPeriod)
+                intent.putExtra("CATEGORY", "Other")
+                startActivity(intent)
+            }
             amtSpent.text = mTotal.toString()
             //if the amount spent is greater than budget, change color to red to draw attention
             if(mTotal > sharedpreferences.getInt("budgetValue",0)){
