@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StudentCashAppTracker</string>
+    <string name="app_name">Student Expense Tracker</string>
 
     <string-array name="categories">
         <item>Car</item>
