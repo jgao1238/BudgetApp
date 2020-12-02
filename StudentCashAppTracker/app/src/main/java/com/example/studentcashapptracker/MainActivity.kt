@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                     editor.putInt("budgetPos",budgetPos)
                     editor.apply()
                     //Change the color if over budget
-                    if(findViewById<TextView>(R.id.amountSpentValue).text.toString().toInt() > sharedpreferences.getInt("budgetValue",0)){
+                    if(findViewById<TextView>(R.id.amountSpentValue).text.toString().toDouble() > sharedpreferences.getInt("budgetValue",0)){
                         findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.RED)
                     } else {
                         findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.BLACK)
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 editor.putInt("budgetPos",budgetPos)
                 editor.apply()
                 //Change the color if over budget
-                if(findViewById<TextView>(R.id.amountSpentValue).text.toString().toInt() > sharedpreferences.getInt("budgetValue",0)){
+                if(findViewById<TextView>(R.id.amountSpentValue).text.toString().toDouble() > sharedpreferences.getInt("budgetValue",0)){
                     findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.RED)
                 } else {
                     findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.BLACK)
@@ -107,6 +107,7 @@ class MainActivity : AppCompatActivity() {
             addExpense.putExtra("trackPeriod",trackPeriod)
             startActivityForResult(addExpense,0)
         }
+
         //        food button
         val foodButton = findViewById<View>(R.id.foodButton) as Button
         foodButton.setOnClickListener {
@@ -188,22 +189,23 @@ class MainActivity : AppCompatActivity() {
                 line = reader.readLine()
             }
             reader.close()
-            var mTotal = 0; var mFood = 0; var mRent = 0; var mCar = 0; var mHealth = 0; var mOther = 0;
+            var mTotal = 0.0; var mFood = 0.0; var mRent = 0.0; var mCar = 0.0; var mHealth = 0.0; var mOther = 0.0;
             for(i in 0 until testing.length()){
                 val entry = testing.getJSONObject(i)
                 //There's going to be a lot of entries, so only add the current period's
                 if(entry.get("period").toString().toInt() == trackPeriod){
-                    mTotal += entry.get("cost").toString().toInt()
+                    var mCost = entry.get("cost").toString().toDouble()
+                    mTotal += mCost
                     if(entry.get("category").toString() == "Car"){
-                        mCar += entry.get("cost").toString().toInt()
+                        mCar += mCost
                     } else if (entry.get("category").toString() == "Food") {
-                        mFood += entry.get("cost").toString().toInt()
+                        mFood += mCost
                     } else if (entry.get("category").toString() == "Rent") {
-                        mRent += entry.get("cost").toString().toInt()
+                        mRent += mCost
                     } else if (entry.get("category").toString() == "Health") {
-                        mHealth += entry.get("cost").toString().toInt()
+                        mHealth += mCost
                     } else if (entry.get("category").toString() == "Other") {
-                        mOther += entry.get("cost").toString().toInt()
+                        mOther += mCost
                     }
                 }
             } //Load the value into each button now
