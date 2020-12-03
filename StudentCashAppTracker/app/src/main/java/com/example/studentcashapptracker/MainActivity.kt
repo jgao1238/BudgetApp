@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     private var budgetValue: Int = 0
     private var budgetPos: Int = 0
-    private var trackPeriod:Int = 0
+    var trackPeriod:Int = 0
 
     protected lateinit var sharedpreferences: SharedPreferences
 
@@ -270,8 +270,9 @@ class MainActivity : AppCompatActivity() {
 
     //menu dialog
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        val previousActivity = Intent(this@MainActivity, PreviousPeriods::class.java)
-//        startActivityForResult(previousActivity,0 )
+        val previousActivity = Intent(this@MainActivity, PreviousPeriods::class.java)
+        previousActivity.putExtra("CURR_PERIOD", trackPeriod)
+        startActivity(previousActivity)
         build = AlertDialog.Builder(this).setMessage("Display Previous Months as clickable")
         val dialogBox = build.create()
         dialogBox.show()
