@@ -16,6 +16,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
@@ -23,12 +24,9 @@ import java.lang.Exception
 import kotlin.properties.Delegates
 
 //Overall task list
-//TODO: editing and deleting entries for time period
+//TODO: editing and deleting entries for time period <-- doing right now
 //TODO: display history of periods
 //TODO: fill out HTML template + video
-
-//Do now
-    //TODO: display entries for current time period/ExpandableListView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var build: AlertDialog.Builder
@@ -108,36 +106,36 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(addExpense,0)
         }
 
-        //        food button
+        //food button
         val foodButton = findViewById<View>(R.id.foodButton) as Button
         foodButton.setOnClickListener {
             val food = Intent(this@MainActivity, Food::class.java)
             startActivityForResult(food, 0)
         }
-        //        car button
+        //car button
         val carButton = findViewById<View>(R.id.carButton) as Button
         carButton.setOnClickListener {
             val car = Intent(this@MainActivity, Car::class.java)
             startActivityForResult(car, 0)
         }
 
-        //        other button
+        //other button
         val otherButton = findViewById<View>(R.id.otherButton) as Button
         otherButton.setOnClickListener {
             val other = Intent(this@MainActivity, Other::class.java)
             startActivityForResult(other, 0)
         }
-        //        rent button
+        //rent button
         val rentButton = findViewById<View>(R.id.rentButton) as Button
         rentButton.setOnClickListener {
             val rent = Intent(this@MainActivity, Rent::class.java)
             startActivityForResult(rent, 0)
         }
-//                health button
-        val healthButton = findViewById<View>(R.id.healthButton) as Button
-        healthButton.setOnClickListener {
-            val health = Intent(this@MainActivity, Health::class.java)
-            startActivityForResult(health, 0)
+        //school button
+        val schoolButton = findViewById<View>(R.id.schoolButton) as Button
+        schoolButton.setOnClickListener {
+            val school = Intent(this@MainActivity, Health::class.java)
+            startActivityForResult(school, 0)
         }      
         
         //Creates an alert dialog confirming that the user wants to end the tracking period
@@ -153,12 +151,16 @@ class MainActivity : AppCompatActivity() {
                 findViewById<Button>(R.id.foodButton).setText("Food: $0")
                 findViewById<Button>(R.id.rentButton).setText("Rent: $0")
                 findViewById<Button>(R.id.carButton).setText("Car: $0")
-                findViewById<Button>(R.id.healthButton).setText("Health: $0")
+                findViewById<Button>(R.id.schoolButton).setText("School: $0")
                 findViewById<Button>(R.id.otherButton).setText("Other: $0")
                 trackPeriod += 1
                 val editor = sharedpreferences.edit()
                 editor.putInt("trackPeriod",trackPeriod)
+                editor.putInt("budgetValue",0) //reset max budget value
+                editor.putInt("budgetPos",0) //reset seekBar position
                 editor.apply()
+                maxField.setText(0.toString()) //do the actual visual changes
+                maxBudget.setProgress(0)
                 findViewById<TextView>(R.id.amountSpentValue).setTextColor(Color.BLACK)
             })
             builder.setNegativeButton("Cancel", DialogInterface.OnClickListener{dialog, id ->
@@ -173,7 +175,7 @@ class MainActivity : AppCompatActivity() {
         var foodButton = findViewById<Button>(R.id.foodButton)
         var rentButton = findViewById<Button>(R.id.rentButton)
         var carButton = findViewById<Button>(R.id.carButton)
-        var healthButton = findViewById<Button>(R.id.healthButton)
+        var schoolButton = findViewById<Button>(R.id.schoolButton)
         var otherButton = findViewById<Button>(R.id.otherButton)
 
         var amtSpent = findViewById<TextView>(R.id.amountSpentValue)
@@ -189,7 +191,7 @@ class MainActivity : AppCompatActivity() {
                 line = reader.readLine()
             }
             reader.close()
-            var mTotal = 0.0; var mFood = 0.0; var mRent = 0.0; var mCar = 0.0; var mHealth = 0.0; var mOther = 0.0;
+            var mTotal = 0.0; var mFood = 0.0; var mRent = 0.0; var mCar = 0.0; var mSchool = 0.0; var mOther = 0.0;
             for(i in 0 until testing.length()){
                 val entry = testing.getJSONObject(i)
                 //There's going to be a lot of entries, so only add the current period's
@@ -202,48 +204,18 @@ class MainActivity : AppCompatActivity() {
                         mFood += mCost
                     } else if (entry.get("category").toString() == "Rent") {
                         mRent += mCost
-                    } else if (entry.get("category").toString() == "Health") {
-                        mHealth += mCost
+                    } else if (entry.get("category").toString() == "School") {
+                        mSchool += mCost
                     } else if (entry.get("category").toString() == "Other") {
                         mOther += mCost
                     }
                 }
             } //Load the value into each button now
             foodButton.setText("Food: $" + mFood.toString())
-            foodButton.setOnClickListener {
-                var intent = Intent(this@MainActivity, Food::class.java)
-                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-                intent.putExtra("CATEGORY", "Food")
-                startActivity(intent)
-            }
             rentButton.setText("Rent: $" + mRent.toString())
-            rentButton.setOnClickListener {
-                var intent = Intent(this@MainActivity, Food::class.java)
-                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-                intent.putExtra("CATEGORY", "Rent")
-                startActivity(intent)
-            }
             carButton.setText("Car: $" + mCar.toString())
-            carButton.setOnClickListener {
-                var intent = Intent(this@MainActivity, Food::class.java)
-                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-                intent.putExtra("CATEGORY", "Car")
-                startActivity(intent)
-            }
-            healthButton.setText("Health: $" + mHealth.toString())
-            healthButton.setOnClickListener {
-                var intent = Intent(this@MainActivity, Food::class.java)
-                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-                intent.putExtra("CATEGORY", "Health")
-                startActivity(intent)
-            }
+            schoolButton.setText("School: $" + mSchool.toString())
             otherButton.setText("Other: $" + mOther.toString())
-            otherButton.setOnClickListener {
-                var intent = Intent(this@MainActivity, Food::class.java)
-                intent.putExtra("TRACKING_PERIOD", trackPeriod)
-                intent.putExtra("CATEGORY", "Other")
-                startActivity(intent)
-            }
             amtSpent.text = mTotal.toString()
             //if the amount spent is greater than budget, change color to red to draw attention
             if(mTotal > sharedpreferences.getInt("budgetValue",0)){

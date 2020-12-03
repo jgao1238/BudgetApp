@@ -37,11 +37,13 @@
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/editbutton"
             android:text="Edit" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
+            android:background="@drawable/deletebutton"
             android:layout_height="wrap_content"
             android:text="Delete" />
 

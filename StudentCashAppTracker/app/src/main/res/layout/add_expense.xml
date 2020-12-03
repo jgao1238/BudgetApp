@@ -69,7 +69,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:maxLines="1"
-        android:inputType="textMultiLine"
+        android:inputType="text"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
         app:layout_constraintStart_toEndOf="@+id/textView5" />
 
@@ -91,6 +91,7 @@
         android:layout_marginTop="36dp"
         android:layout_marginEnd="83dp"
         android:text="Clear"
+        android:background="@drawable/clearbutton"
         app:layout_constraintEnd_toEndOf="@+id/addButton"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/cancelButton"
@@ -103,6 +104,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="36dp"
         android:text="Add"
+        android:background="@drawable/addbutton"
         app:layout_constraintBottom_toTopOf="@+id/clearButton"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLine" />
 
@@ -113,6 +115,7 @@
         android:layout_marginStart="76dp"
         android:layout_marginTop="46dp"
         android:text="Cancel"
+        android:background="@drawable/cancelbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
 

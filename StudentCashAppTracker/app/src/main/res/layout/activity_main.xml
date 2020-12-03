@@ -66,7 +66,7 @@
         android:id="@+id/amountSpentValue"
         android:layout_width="153dp"
         android:layout_height="65dp"
-        android:text="$0"
+        android:text="0"
         android:textAlignment="center"
         android:textSize="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -144,10 +144,10 @@
         app:layout_constraintVertical_bias="0.587" />
 
     <Button
-        android:id="@+id/healthButton"
+        android:id="@+id/schoolButton"
         android:layout_width="400dp"
         android:layout_height="67dp"
-        android:text="Health"
+        android:text="School"
         android:textSize="36dp"
         android:gravity="left"
         app:layout_constraintBottom_toBottomOf="parent"

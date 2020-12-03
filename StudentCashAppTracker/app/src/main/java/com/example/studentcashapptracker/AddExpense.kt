@@ -2,6 +2,7 @@ package com.example.studentcashapptracker
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
