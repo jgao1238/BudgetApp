@@ -40,7 +40,7 @@ class Health : AppCompatActivity(){
                 sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
                 trackPeriod = sharedpreferences.getInt("trackPeriod",0)
                 val entry = entries.getJSONObject(i)
-                if(entry.get("period").toString().toInt() == trackPeriod && entry.get("category").toString() == "Health"){
+                if(entry.get("period").toString().toInt() == trackPeriod && entry.get("category").toString() == "School"){
                     var item = HashMap<String, String>()
                     item.put("line1", "Date: " + entry.get("date").toString())
                     item.put("line2", "Cost: $" + entry.get("cost").toString())
@@ -51,7 +51,7 @@ class Health : AppCompatActivity(){
             val adapt = SimpleAdapter(this,list, R.layout.display_entries, arrayOf("line1","line2","line3"),
                 intArrayOf(R.id.line_a,R.id.line_b,R.id.line_c)
             )
-            val testing = findViewById<ListView>(R.id.healthList)
+            val testing = findViewById<ListView>(R.id.schoolList)
             testing.adapter = adapt
         } catch(e: IOException){
             Log.i("Car.kt","IOException")

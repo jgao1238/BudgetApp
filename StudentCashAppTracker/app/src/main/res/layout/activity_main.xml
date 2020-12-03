@@ -144,10 +144,10 @@
         app:layout_constraintVertical_bias="0.587" />
 
     <Button
-        android:id="@+id/healthButton"
+        android:id="@+id/schoolButton"
         android:layout_width="400dp"
         android:layout_height="67dp"
-        android:text="Health"
+        android:text="School"
         android:textSize="36dp"
         android:gravity="left"
         app:layout_constraintBottom_toBottomOf="parent"
