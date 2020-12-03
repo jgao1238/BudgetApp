@@ -24,11 +24,6 @@ class PreviousPeriods: ListActivity(){
         mAdapter = PeriodAdapter(applicationContext)
         listAdapter = mAdapter
 
-        //set up header
-        var header = layoutInflater.inflate(R.layout.food_layout, periodListView, false)
-        header.findViewById<TextView>(R.id.headerText).text = "Previous Periods"
-        periodListView.addHeaderView(header)
-
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))
             var line = reader.readLine()
