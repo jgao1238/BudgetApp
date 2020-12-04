@@ -1,14 +1,11 @@
 package com.example.studentcashapptracker
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
 import android.util.Log
 import android.widget.ListView
 import android.widget.SimpleAdapter
-import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -23,6 +20,8 @@ class Car: AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.car_layout)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)//Enable back button
 
         var entries = JSONArray()
         var trackPeriod = intent.getIntExtra("TRACKING_PERIOD",0)

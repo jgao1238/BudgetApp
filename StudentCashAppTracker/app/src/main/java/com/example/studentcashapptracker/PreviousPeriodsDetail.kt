@@ -36,6 +36,8 @@ class PreviousPeriodsDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.previoius_period_detailed)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)//Enable back button
+
         sharedpreferences = getSharedPreferences(mypreference,Context.MODE_PRIVATE)
 
         trackPeriod = intent.getIntExtra("TRACKING_PERIOD", 0)

@@ -20,6 +20,8 @@ class Rent: AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rent_layout)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)//Enable back button
+
         var entries = JSONArray()
         var trackPeriod = intent.getIntExtra("TRACKING_PERIOD",0)
         val list: MutableList<HashMap<String,String>> = ArrayList()

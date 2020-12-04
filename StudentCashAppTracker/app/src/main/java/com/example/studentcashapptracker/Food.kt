@@ -21,6 +21,8 @@ class Food : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.food_layout)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)//Enable back button
+
         var entries = JSONArray()
         var trackPeriod: Int = intent.getIntExtra("TRACKING_PERIOD", 0)
         val list: MutableList<HashMap<String,String>> = ArrayList()

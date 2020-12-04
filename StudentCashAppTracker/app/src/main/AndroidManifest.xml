@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Food" android:screenOrientation="portrait">
+        <activity android:name=".Food" android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name=".ExplicitlyLoadedActivity" />
 
@@ -33,7 +34,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Health" android:screenOrientation="portrait">
+        <activity android:name=".Health" android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name=".ExplicitlyLoadedActivity" />
 
@@ -41,7 +43,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Rent" android:screenOrientation="portrait">
+        <activity android:name=".Rent" android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name=".ExplicitlyLoadedActivity" />
 
@@ -49,7 +52,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Other" android:screenOrientation="portrait">
+        <activity android:name=".Other" android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name=".ExplicitlyLoadedActivity" />
 
@@ -57,7 +61,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Car" android:screenOrientation="portrait">
+        <activity android:name=".Car" android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name=".ExplicitlyLoadedActivity" />
 
@@ -65,7 +70,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PreviousPeriods" android:screenOrientation="portrait">
+        <activity android:name=".PreviousPeriods" android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name=".ExplicitlyLoadedActivity" />
 
@@ -73,7 +79,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PreviousPeriodsDetail" android:screenOrientation="portrait">
+        <activity android:name=".PreviousPeriodsDetail" android:screenOrientation="portrait"
+            android:parentActivityName=".PreviousPeriods">
             <intent-filter>
                 <action android:name=".ExplicitlyLoadedActivity" />
 
