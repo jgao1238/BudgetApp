@@ -8,12 +8,14 @@ import java.util.*
 class Period {
         var startDate: String? = null
         var endDate: String? = null
-        var totalSpending: Int? = null
+        var totalSpending: Double? = null
+        var period: Int? = null
 
-        constructor(startDate: String?, endDate: String?, totalSpending: Int?) {
+        constructor(startDate: String?, endDate: String?, totalSpending: Double?, period: Int?) {
             this.startDate = startDate
             this.endDate = endDate
             this.totalSpending = totalSpending
+            this.period = period
         }
 
         /*fun packageToIntent(): Intent {

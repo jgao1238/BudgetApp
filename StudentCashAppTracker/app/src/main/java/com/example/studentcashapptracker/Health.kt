@@ -24,7 +24,7 @@ class Health : AppCompatActivity(){
         setContentView(R.layout.health_layout)
 
         var entries = JSONArray()
-        var trackPeriod: Int = 0
+        var trackPeriod = intent.getIntExtra("TRACKINGPERIOD",0)
         val list: MutableList<HashMap<String,String>> = ArrayList()
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput("TestFile.txt")))
@@ -37,8 +37,8 @@ class Health : AppCompatActivity(){
             }
             reader.close()
             for(i in 0 until entries.length()){
-                sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
-                trackPeriod = sharedpreferences.getInt("trackPeriod",0)
+                //sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
+                //trackPeriod = sharedpreferences.getInt("trackPeriod",0)
                 val entry = entries.getJSONObject(i)
                 if(entry.get("period").toString().toInt() == trackPeriod && entry.get("category").toString() == "School"){
                     var item = HashMap<String, String>()

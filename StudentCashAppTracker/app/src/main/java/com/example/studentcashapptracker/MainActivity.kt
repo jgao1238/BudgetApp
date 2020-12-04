@@ -110,33 +110,38 @@ class MainActivity : AppCompatActivity() {
         val foodButton = findViewById<View>(R.id.foodButton) as Button
         foodButton.setOnClickListener {
             val food = Intent(this@MainActivity, Food::class.java)
-            startActivityForResult(food, 0)
+            food.putExtra("TRACKING_PERIOD", trackPeriod)
+            startActivity(food)
         }
         //car button
         val carButton = findViewById<View>(R.id.carButton) as Button
         carButton.setOnClickListener {
             val car = Intent(this@MainActivity, Car::class.java)
-            startActivityForResult(car, 0)
+            car.putExtra("TRACKING_PERIOD", trackPeriod)
+            startActivity(car)
         }
 
         //other button
         val otherButton = findViewById<View>(R.id.otherButton) as Button
         otherButton.setOnClickListener {
             val other = Intent(this@MainActivity, Other::class.java)
-            startActivityForResult(other, 0)
+            other.putExtra("TRACKING_PERIOD", trackPeriod)
+            startActivity(other)
         }
         //rent button
         val rentButton = findViewById<View>(R.id.rentButton) as Button
         rentButton.setOnClickListener {
             val rent = Intent(this@MainActivity, Rent::class.java)
-            startActivityForResult(rent, 0)
+            rent.putExtra("TRACKING_PERIOD", trackPeriod)
+            startActivity(rent)
         }
         //school button
         val schoolButton = findViewById<View>(R.id.schoolButton) as Button
         schoolButton.setOnClickListener {
             val school = Intent(this@MainActivity, Health::class.java)
-            startActivityForResult(school, 0)
-        }      
+            school.putExtra("TRACKING_PERIOD", trackPeriod)
+            startActivity(school)
+        }
         
         //Creates an alert dialog confirming that the user wants to end the tracking period
         val endPeriod = findViewById<View>(R.id.endTrackingPeriodButton) as Button
@@ -242,12 +247,13 @@ class MainActivity : AppCompatActivity() {
 
     //menu dialog
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val previousActivity = Intent(this@MainActivity, PreviousPeriods::class.java)
-        previousActivity.putExtra("CURR_PERIOD", trackPeriod)
-        startActivity(previousActivity)
-        build = AlertDialog.Builder(this).setMessage("Display Previous Months as clickable")
-        val dialogBox = build.create()
-        dialogBox.show()
+        if(trackPeriod > 0) {
+            val previousActivity = Intent(this@MainActivity, PreviousPeriods::class.java)
+            previousActivity.putExtra("CURR_PERIOD", trackPeriod)
+            startActivity(previousActivity)
+        } else {
+
+        }
         return true
     }
 
