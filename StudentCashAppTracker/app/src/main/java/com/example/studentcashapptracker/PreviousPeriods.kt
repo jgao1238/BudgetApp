@@ -15,8 +15,9 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
+//This class, along with period and period adapter, are loosely based on project 11's way of displaying entries
 class PreviousPeriods: ListActivity(){
-    private  val FILE_NAME = "TestFile.txt"
+    private val FILE_NAME = "TestFile.txt"
     private lateinit var mAdapter: PeriodAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,9 @@ class PreviousPeriods: ListActivity(){
         val periodListView = listView
         mAdapter = PeriodAdapter(applicationContext)
         listAdapter = mAdapter
+
+        var header = layoutInflater.inflate(R.layout.previous_periods_header, periodListView,false)
+        periodListView.addHeaderView(header)
 
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))
@@ -58,6 +62,7 @@ class PreviousPeriods: ListActivity(){
                 endDate = entry.getString("date")
                 }
             if(intent.getIntExtra("CURR_PERIOD", 0) > trackingPeriod){
+                //TODO: Smart start date and end date
                 mAdapter.add(Period(startDate, endDate, totalCost, trackingPeriod))
                 mAdapter.notifyDataSetChanged()
             }

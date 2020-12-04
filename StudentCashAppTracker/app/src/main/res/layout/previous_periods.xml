@@ -8,7 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Date: "
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/startDateText"
@@ -16,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/startDateString"
         android:layout_toRightOf="@+id/startDateString"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/endDateString"
@@ -24,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/startDateString"
         android:text="End Date: "
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/endDateText"
@@ -32,14 +35,16 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/endDateString"
         android:layout_toRightOf="@+id/endDateString"
-        android:ellipsize="end"/>
+        android:ellipsize="end"
+        android:textSize="14sp"/>
     <TextView
         android:id="@+id/totalExpenseString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/endDateString"
         android:text="Total Expenses: "
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="14sp"/>
 
 
     <TextView
@@ -49,7 +54,8 @@
         android:layout_alignBaseline="@+id/totalExpenseString"
         android:layout_toRightOf="@+id/totalExpenseString"
         android:ellipsize="end"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="14sp"/>
 
 
 
