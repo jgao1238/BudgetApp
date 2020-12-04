@@ -25,7 +25,7 @@ class Car: AppCompatActivity(){
         setContentView(R.layout.car_layout)
 
         var entries = JSONArray()
-        var trackPeriod = intent.getIntExtra("TRACKINGPERIOD",0)
+        var trackPeriod = intent.getIntExtra("TRACKING_PERIOD",0)
         val list: MutableList<HashMap<String,String>> = ArrayList()
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput("TestFile.txt")))
