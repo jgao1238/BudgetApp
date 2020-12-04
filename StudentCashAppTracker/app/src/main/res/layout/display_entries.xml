@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/line_a"
+        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Date: "
@@ -14,7 +14,7 @@
         android:textStyle="italic" />
 
     <TextView
-        android:id="@+id/line_b"
+        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cost: $"
@@ -22,7 +22,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/line_c"
+        android:id="@+id/line3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description: "

@@ -47,7 +47,7 @@ class Food : AppCompatActivity(){
                 }
             }
             val adapt = SimpleAdapter(this,list, R.layout.display_entries, arrayOf("line1","line2","line3"),
-                intArrayOf(R.id.line_a,R.id.line_b,R.id.line_c)
+                intArrayOf(R.id.line1,R.id.line2,R.id.line3)
             )
             val testing = findViewById<ListView>(R.id.foodList)
             testing.adapter = adapt
