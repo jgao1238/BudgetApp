@@ -59,7 +59,7 @@ class PreviousPeriods: AppCompatActivity(){
                     var item = HashMap<String, String>()
                     item.put("startDateString", "Start Date: $startDate")
                     item.put("endDateString", "End Date: $endDate")
-                    item.put("totalExpenseString", "Total Expenses: $totalCost")
+                    item.put("totalExpenseString", "Total Expenses: " + String.format("%.2f", totalCost.toString()))
                     item.put("trackingPeriod", "$trackingPeriod")
                     list.add(item)
 
@@ -67,7 +67,6 @@ class PreviousPeriods: AppCompatActivity(){
                     endDate = entry.getString("date").toString()
                     date = entry.getString("date").toString()
                     dateTransfer = date.split("/").toTypedArray()
-                    if(dateTransfer.get(0).toInt() == )
                     startDateInts.add(0, dateTransfer.get(0).toInt())
                     startDateInts.add(1, dateTransfer.get(1).toInt())
                     startDateInts.add(2, dateTransfer.get(2).toInt())

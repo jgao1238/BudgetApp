@@ -129,7 +129,7 @@ class PreviousPeriodsDetail : AppCompatActivity() {
             carButton.setText("Car: $" + mCar.toString())
             schoolButton.setText("School: $" + mSchool.toString())
             otherButton.setText("Other: $" + mOther.toString())
-            amtSpent.text = mTotal.toString()
+            amtSpent.text = String.format("%.2f", mTotal)
         } catch(e: IOException){
             Log.i(TAG,"IOException")
         }
