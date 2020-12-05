@@ -12,15 +12,6 @@
         android:textSize="14sp"/>
 
     <TextView
-        android:id="@+id/startDateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/startDateString"
-        android:layout_toRightOf="@+id/startDateString"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="14sp"/>
-
-    <TextView
         android:id="@+id/endDateString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,14 +21,6 @@
         android:textSize="14sp"/>
 
     <TextView
-        android:id="@+id/endDateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/endDateString"
-        android:layout_toRightOf="@+id/endDateString"
-        android:ellipsize="end"
-        android:textSize="14sp"/>
-    <TextView
         android:id="@+id/totalExpenseString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,16 +29,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="14sp"/>
 
-
-    <TextView
-        android:id="@+id/totalExpenseText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/totalExpenseString"
-        android:layout_toRightOf="@+id/totalExpenseString"
-        android:ellipsize="end"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="14sp"/>
 
 
 

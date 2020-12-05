@@ -1,13 +1,11 @@
 package com.example.studentcashapptracker
 
 import android.app.ListActivity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -15,20 +13,17 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
-//This class, along with period and period adapter, are loosely based on project 11's way of displaying entries
-class PreviousPeriods: ListActivity(){
+
+class PreviousPeriods: AppCompatActivity(){
     private val FILE_NAME = "TestFile.txt"
-    private lateinit var mAdapter: PeriodAdapter
+    private var list : MutableList<HashMap<String,String>> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //list setup stuff
-        val periodListView = listView
-        mAdapter = PeriodAdapter(applicationContext)
-        listAdapter = mAdapter
+        setContentView(R.layout.previous_periods_layout)
 
-        var header = layoutInflater.inflate(R.layout.previous_periods_header, periodListView,false)
-        periodListView.addHeaderView(header)
+
+        val periodList = findViewById<ListView>(R.id.periodList)
 
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))
@@ -45,35 +40,56 @@ class PreviousPeriods: ListActivity(){
             var trackingPeriod = 0
             var entry = testing.getJSONObject(0)
             var startDate = entry.getString("date").toString()
-            var endDate : String? = null
-            var totalCost = 0.0
+            var endDate = entry.getString("date").toString()
+            var totalCost =entry.get("cost").toString().toDouble()
             for (i in 1 until testing.length()) {
                 entry = testing.getJSONObject(i)
                 //get the total cost over the period, and if the period has changed log the sum of the entries along with the start and end date
                 if (entry.get("period").toString().toInt() > trackingPeriod) {
-                        mAdapter.add(Period(startDate, endDate, totalCost, trackingPeriod))
-                        mAdapter.notifyDataSetChanged()
-                        startDate = entry.getString("date").toString()
-                        totalCost = 0.0
-                        trackingPeriod++
-                    }
+                    var item = HashMap<String, String>()
+                    item.put("startDateString", "Start Date: $startDate")
+                    item.put("endDateString", "End Date: $endDate")
+                    item.put("totalExpenseString", "Total Expenses: $totalCost")
+                    item.put("trackingPeriod", "$trackingPeriod")
+                    list.add(item)
+                    startDate = entry.getString("date").toString()
+                    totalCost = 0.0
+                    trackingPeriod++
+                }
+                //TODO: Smart start date and end date
                 var cost = entry.getString("cost").toString().toDouble()
                 totalCost += cost
-                endDate = entry.getString("date")
-                }
-            if(intent.getIntExtra("CURR_PERIOD", 0) > trackingPeriod){
-                //TODO: Smart start date and end date
-                mAdapter.add(Period(startDate, endDate, totalCost, trackingPeriod))
-                mAdapter.notifyDataSetChanged()
-            }
-        } catch (e: IOException) {
-            Log.i("Error in Menus", "IOException")
-        }
 
-        periodListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, i, _ ->
-            var record = mAdapter!!.getItem(i) as Period
+                //var date = entry.getString("date").toString()
+                //var dateTransfer = date.split("/").toTypedArray()
+
+                endDate = entry.getString("date").toString()
+            }
+            //covers edge case where the is no entries in the current period
+
+            var sharedPreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
+
+            if(sharedPreferences.getInt("trackPeriod",0) > trackingPeriod){
+                var item = HashMap<String, String>()
+                item.put("startDateString", "Start Date: $startDate")
+                item.put("endDateString", "End Date: $endDate")
+                item.put("totalExpenseString", "Total Expenses: $totalCost")
+                item.put("trackingPeriod", "$trackingPeriod")
+                list.add(item)
+            }
+
+            val adapt = SimpleAdapter(this, list, R.layout.previous_periods,
+                arrayOf("startDateString","endDateString","totalExpenseString"),
+                intArrayOf(R.id.startDateString,R.id.endDateString,R.id.totalExpenseString)
+            )
+            periodList.adapter = adapt
+        } catch (e: IOException) {
+            Log.i("Error in Pevious Period", "IOException")
+        }
+        periodList.onItemClickListener =  AdapterView.OnItemClickListener { _, _, i, _ ->
+            var period  = list.get(i)
             var intent = Intent(this@PreviousPeriods, PreviousPeriodsDetail::class.java)
-            intent.putExtra("TRACKING_PERIOD", record.period)
+            intent.putExtra("TRACKING_PERIOD", period.get("trackingPeriod")?.toInt())
             startActivity(intent)
         }
 
