@@ -41,6 +41,16 @@ class PreviousPeriods: AppCompatActivity(){
             var entry = testing.getJSONObject(0)
             var startDate = entry.getString("date").toString()
             var endDate = entry.getString("date").toString()
+
+            var date = entry.getString("date").toString()
+            var dateTransfer = date.split("/").toTypedArray()
+            var startDateInts = ArrayList<Int>()
+            var endDateInts: java.util.ArrayList<Int>
+            startDateInts.add(0, dateTransfer.get(0).toInt())
+            startDateInts.add(1, dateTransfer.get(1).toInt())
+            startDateInts.add(2, dateTransfer.get(2).toInt())
+            endDateInts = ArrayList(startDateInts)
+
             var totalCost =entry.get("cost").toString().toDouble()
             for (i in 1 until testing.length()) {
                 entry = testing.getJSONObject(i)
@@ -52,7 +62,17 @@ class PreviousPeriods: AppCompatActivity(){
                     item.put("totalExpenseString", "Total Expenses: $totalCost")
                     item.put("trackingPeriod", "$trackingPeriod")
                     list.add(item)
+
                     startDate = entry.getString("date").toString()
+                    endDate = entry.getString("date").toString()
+                    date = entry.getString("date").toString()
+                    dateTransfer = date.split("/").toTypedArray()
+                    if(dateTransfer.get(0).toInt() == )
+                    startDateInts.add(0, dateTransfer.get(0).toInt())
+                    startDateInts.add(1, dateTransfer.get(1).toInt())
+                    startDateInts.add(2, dateTransfer.get(2).toInt())
+                    endDateInts = ArrayList(startDateInts)
+
                     totalCost = 0.0
                     trackingPeriod++
                 }
@@ -60,10 +80,36 @@ class PreviousPeriods: AppCompatActivity(){
                 var cost = entry.getString("cost").toString().toDouble()
                 totalCost += cost
 
-                //var date = entry.getString("date").toString()
-                //var dateTransfer = date.split("/").toTypedArray()
+                date = entry.getString("date").toString()
+                dateTransfer = date.split("/").toTypedArray()
+                var dateInts = ArrayList<Int>()
+                dateInts.add(0, dateTransfer.get(0).toInt())
+                dateInts.add(1, dateTransfer.get(1).toInt())
+                dateInts.add(2, dateTransfer.get(2).toInt())
 
-                endDate = entry.getString("date").toString()
+                if(dateInts.get(2) > endDateInts.get(2)){
+                    endDateInts = dateInts
+                    endDate = date
+                } else if(dateInts.get(0) > endDateInts.get(0)) {
+                    endDateInts = dateInts
+                    endDate = date
+                } else if(dateInts.get(1) > endDateInts.get(1)){
+                    endDateInts = dateInts
+                    endDate = date
+                }
+
+                if(startDateInts.get(2) > dateInts.get(2)){
+                    startDateInts = dateInts
+                    startDate = date
+                } else if(startDateInts.get(0) > dateInts.get(0)){
+                    startDateInts = dateInts
+                    startDate = date
+                } else if(startDateInts.get(1) > dateInts.get(1)){
+                    startDateInts = dateInts
+                    startDate = date
+                }
+
+
             }
             //covers edge case where the is no entries in the current period
 
