@@ -4,8 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ListView
 import android.widget.SimpleAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONArray
 import org.json.JSONObject
@@ -14,14 +18,16 @@ import java.io.IOException
 import java.io.InputStreamReader
 
 class Rent: AppCompatActivity(){
-    protected lateinit var sharedpreferences: SharedPreferences
+    //protected lateinit var sharedpreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rent_layout)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)//Enable back button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) //Enable back button
+    }
 
+    override fun onStart() {
         var entries = JSONArray()
         var trackPeriod = intent.getIntExtra("TRACKING_PERIOD",0)
         val list: MutableList<HashMap<String,String>> = ArrayList()
@@ -47,13 +53,28 @@ class Rent: AppCompatActivity(){
                     list.add(item)
                 }
             }
-            val adapt = SimpleAdapter(this,list, R.layout.display_entries, arrayOf("line1","line2","line3"),
-                intArrayOf(R.id.line1,R.id.line2,R.id.line3)
-            )
+            val adapt = object: SimpleAdapter(this,list, R.layout.display_entries, arrayOf("line1","line2","line3"),
+                intArrayOf(R.id.line1,R.id.line2,R.id.line3)) {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+                    val v: View = super.getView(position, convertView, parent)
+                    val editButton: Button = v.findViewById<Button>(R.id.editButton)
+                    editButton.setOnClickListener{
+                        Toast.makeText(applicationContext, "EDIT", Toast.LENGTH_LONG).show()
+
+                    }
+                    val deleteButton: Button = v.findViewById<Button>(R.id.deleteButton)
+                    deleteButton.setOnClickListener{
+                        Toast.makeText(applicationContext, "DELETE", Toast.LENGTH_LONG).show()
+
+                    }
+                    return v
+                }
+            }
             val testing = findViewById<ListView>(R.id.rentList)
             testing.adapter = adapt
         } catch(e: IOException){
-            Log.i("Car.kt","IOException")
+            Log.i("Rent.kt","IOException")
         }
+        super.onStart()
     }
 }

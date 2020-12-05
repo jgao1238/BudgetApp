@@ -44,6 +44,7 @@ class EditExpense: AppCompatActivity() {
 
         //TODO: all fields are now populated by that entry
             //spinner.setSelection(index,true)
+                //For setting the spinner as something else
 
         //TODO: EDITING FIELD
         val acceptExpense = findViewById<View>(R.id.acceptButton) as Button
