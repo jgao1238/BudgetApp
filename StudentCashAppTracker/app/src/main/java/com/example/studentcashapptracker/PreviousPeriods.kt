@@ -73,7 +73,7 @@ class PreviousPeriods: AppCompatActivity(){
                     endDateInts = ArrayList(startDateInts)
 
                     totalCost = 0.0
-                    trackingPeriod++
+                    trackingPeriod = entry.get("period").toString().toInt()
                 }
                 //TODO: Smart start date and end date
                 var cost = entry.getString("cost").toString().toDouble()
