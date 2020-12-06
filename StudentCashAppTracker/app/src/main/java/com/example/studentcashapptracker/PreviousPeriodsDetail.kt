@@ -40,6 +40,7 @@ class PreviousPeriodsDetail : AppCompatActivity() {
 
         sharedpreferences = getSharedPreferences(mypreference,Context.MODE_PRIVATE)
 
+        //Load values from intent and shared preferences
         trackPeriod = intent.getIntExtra("TRACKING_PERIOD", 0)
         budgetValue = sharedpreferences.getInt("budgetValue",0)
         budgetPos = sharedpreferences.getInt("budgetPos",0)
@@ -90,8 +91,9 @@ class PreviousPeriodsDetail : AppCompatActivity() {
         var carButton = findViewById<Button>(R.id.pastCarButton)
         var schoolButton = findViewById<Button>(R.id.pastSchoolButton)
         var otherButton = findViewById<Button>(R.id.pastOtherButton)
-
         var amtSpent = findViewById<TextView>(R.id.pastAmountSpentValue)
+
+        //Read JSON values
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))
             var line = reader.readLine()
@@ -104,6 +106,8 @@ class PreviousPeriodsDetail : AppCompatActivity() {
                 line = reader.readLine()
             }
             reader.close()
+
+            //Calculate the values
             var mTotal = 0.0; var mFood = 0.0; var mRent = 0.0; var mCar = 0.0; var mSchool = 0.0; var mOther = 0.0;
             for(i in 0 until testing.length()){
                 val entry = testing.getJSONObject(i)
@@ -142,7 +146,7 @@ class PreviousPeriodsDetail : AppCompatActivity() {
 
     companion object {
         private const val mypreference = "mypref"
-        private const val TAG = "MainActivity"
+        private const val TAG = "PreviousPeriodsDetail"
         private const val FILE_NAME = "TestFile.txt"
     }
 }

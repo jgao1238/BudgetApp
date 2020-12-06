@@ -25,6 +25,7 @@ class ExpenseAdapter(mContext: Context) : BaseAdapter() {
         return position.toLong()
     }
 
+    //Reference: Lab 11 from CMSC436
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         var newView = convertView
         val holder: ViewHolder

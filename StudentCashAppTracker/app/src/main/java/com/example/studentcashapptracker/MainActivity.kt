@@ -1,5 +1,6 @@
 package com.example.studentcashapptracker
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -23,14 +24,7 @@ import java.io.*
 import java.lang.Exception
 import kotlin.properties.Delegates
 
-//Overall task list
-//TODO: editing entries
-//TODO: fill out HTML template (video, sources, citations/comments)
-//TODO: peer review doc
-
 class MainActivity : AppCompatActivity() {
-    private lateinit var build: AlertDialog.Builder
-
     private var budgetValue: Int = 0
     private var budgetPos: Int = 0
     var trackPeriod:Int = 0
@@ -43,14 +37,17 @@ class MainActivity : AppCompatActivity() {
 
         sharedpreferences = getSharedPreferences(mypreference,Context.MODE_PRIVATE)
 
+        //Reload these saved values
         trackPeriod = sharedpreferences.getInt("trackPeriod",0)
         budgetValue = sharedpreferences.getInt("budgetValue",0)
         budgetPos = sharedpreferences.getInt("budgetPos",0)
 
+        //Restore positions and text on screen
         val maxBudget = findViewById<View>(R.id.maxLimitAmountSlider) as SeekBar
         val maxField = findViewById<View>(R.id.maxLimitAmountText) as EditText
         maxField.setText(budgetValue.toString())
-        maxBudget.setProgress(budgetPos.toInt())
+        maxBudget.progress = budgetPos
+
         //Change the seekBar if EditText changes
         maxField.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
@@ -75,6 +72,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
         })
+
         //Change the EditText if the seekBar changes
         maxBudget.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -142,7 +140,7 @@ class MainActivity : AppCompatActivity() {
             school.putExtra("TRACKING_PERIOD", trackPeriod)
             startActivity(school)
         }
-        
+
         //Creates an alert dialog confirming that the user wants to end the tracking period
         val endPeriod = findViewById<View>(R.id.endTrackingPeriodButton) as Button
         endPeriod.setOnClickListener{
@@ -175,6 +173,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onStart() {
         //Initializing the total summary at the top + update when we come back from add screen
         var foodButton = findViewById<Button>(R.id.foodButton)
@@ -182,8 +181,9 @@ class MainActivity : AppCompatActivity() {
         var carButton = findViewById<Button>(R.id.carButton)
         var schoolButton = findViewById<Button>(R.id.schoolButton)
         var otherButton = findViewById<Button>(R.id.otherButton)
-
         var amtSpent = findViewById<TextView>(R.id.amountSpentValue)
+
+        //Reading in JSON values
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))
             var line = reader.readLine()
@@ -196,6 +196,8 @@ class MainActivity : AppCompatActivity() {
                 line = reader.readLine()
             }
             reader.close()
+
+            //Calculating the values for each button display
             var mTotal = 0.0; var mFood = 0.0; var mRent = 0.0; var mCar = 0.0; var mSchool = 0.0; var mOther = 0.0;
             for(i in 0 until testing.length()){
                 val entry = testing.getJSONObject(i)
@@ -216,13 +218,13 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } //Load the value into each button now
-            String.format("%.2f", mFood)
             foodButton.setText("Food: $" + String.format("%.2f", mFood))
             rentButton.setText("Rent: $" + String.format("%.2f", mRent))
             carButton.setText("Car: $" + String.format("%.2f", mCar))
             schoolButton.setText("School: $" + String.format("%.2f", mSchool))
             otherButton.setText("Other: $" + String.format("%.2f", mOther))
-            amtSpent.text = String.format("%.2f", mTotal) //amtSpent.text = mTotal.toString()
+            amtSpent.text = String.format("%.2f", mTotal)
+
             //if the amount spent is greater than budget, change color to red to draw attention
             if(mTotal > sharedpreferences.getInt("budgetValue",0)){
                 amtSpent.setTextColor(Color.RED)

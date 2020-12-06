@@ -15,7 +15,7 @@ import java.io.OutputStreamWriter
 
 class EditExpense: AppCompatActivity() {
     companion object {
-        private const val TAG = "AddExpense"
+        private const val TAG = "EditExpense"
         private const val FILE_NAME = "TestFile.txt"
     }
 
@@ -23,7 +23,7 @@ class EditExpense: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_expense)
 
-        //TODO: get intent extras
+        //Get intent extras
         var oldCategory = intent.getStringExtra("category")
         var oldCost = intent.getDoubleExtra("cost",0.0)
         var oldDate = intent.getStringExtra("date")
@@ -37,38 +37,39 @@ class EditExpense: AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             category.adapter = adapter
         }
-        var mCost = findViewById<EditText>(R.id.editTextNumberDecimal)
-        var mDesc = findViewById<EditText>(R.id.editTextTextMultiLine)
-        //set up the 3 spinners for the date
+        //Set up month spinner
         val monthSpinner: Spinner = findViewById(R.id.spinner3)
         ArrayAdapter.createFromResource(this, R.array.month, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             monthSpinner.adapter = adapter
         }
+        //Set up day spinner
         val daySpinner: Spinner = findViewById(R.id.spinner4)
         ArrayAdapter.createFromResource(this, R.array.day, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             daySpinner.adapter = adapter
         }
+        //Set up year spinner
         val yearSpinner: Spinner = findViewById(R.id.spinner5)
         ArrayAdapter.createFromResource(this, R.array.year, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             yearSpinner.adapter = adapter
         }
+        //Set up references to remaining form's fields
+        var mCost = findViewById<EditText>(R.id.costEditText)
+        var mDesc = findViewById<EditText>(R.id.descriptionEditText)
 
-        //TODO: prepopulate every field with the intent
-            //spinner.setSelection(index,true)
-            //val strs = "name, 2012, 2017".split(",").toTypedArray()
-        when(oldCategory){
+        //Populate every field of the form with the passed in information
+        when(oldCategory){ //Load category
             "Food" -> category.setSelection(0,true)
             "Rent" -> category.setSelection(1,true)
             "Car" -> category.setSelection(2,true)
             "School" -> category.setSelection(3,true)
             "Other" -> category.setSelection(4,true)
         }
-        mCost.setText(oldCost.toString())
-        val date = oldDate?.split("/")?.toTypedArray()
-        when(date?.get(0)){
+        mCost.setText(oldCost.toString()) //Load cost
+        val date = oldDate?.split("/")?.toTypedArray() //Break the string into parts
+        when(date?.get(0)){ //Load month
             "1" -> monthSpinner.setSelection(0,true)
             "2" -> monthSpinner.setSelection(1,true)
             "3" -> monthSpinner.setSelection(2,true)
@@ -82,7 +83,7 @@ class EditExpense: AppCompatActivity() {
             "11" -> monthSpinner.setSelection(10,true)
             "12" -> monthSpinner.setSelection(11,true)
         }
-        when(date?.get(1)){
+        when(date?.get(1)){ //Load date
             "1" -> daySpinner.setSelection(0,true)
             "2" -> daySpinner.setSelection(1,true)
             "3" -> daySpinner.setSelection(2,true)
@@ -115,25 +116,24 @@ class EditExpense: AppCompatActivity() {
             "30" -> daySpinner.setSelection(29,true)
             "31" -> daySpinner.setSelection(30,true)
         }
-        when(date?.get(2)){
+        when(date?.get(2)){ //Load year
             "2019" -> yearSpinner.setSelection(0,true)
             "2020" -> yearSpinner.setSelection(1,true)
             "2021" -> yearSpinner.setSelection(2,true)
             "2022" -> yearSpinner.setSelection(3,true)
             "2023" -> yearSpinner.setSelection(4,true)
         }
-        mDesc.setText(oldDescription)
+        mDesc.setText(oldDescription) //Load description
 
-
-        //TODO: EDITING FIELD
+        //Create a listener for the update button
         val acceptExpense = findViewById<View>(R.id.acceptButton) as Button
         acceptExpense.setOnClickListener{
             val category = spinner.selectedItem
-            val cost = editTextNumberDecimal.text
+            val cost = costEditText.text
             var month = spinner3.selectedItem
             val day = spinner4.selectedItem
             val year = spinner5.selectedItem
-            val description = editTextTextMultiLine.text
+            val description = descriptionEditText.text
             when(month){
                 "January" -> month = "1"
                 "February" -> month = "2"
@@ -159,44 +159,51 @@ class EditExpense: AppCompatActivity() {
             jsonObject.put("period",trackPeriod)
             var entry = jsonObject.toString()
 
-            //First thing we need to do is create a JSONArray of the current file
-            //Then we reset the file to be empty
+            //The expense field can be zero but it cannot be empty
+            if(cost.toString() != "" && cost.toString() != "0"){
+                //First thing we need to do is create a JSONArray of the current file
+                //Then we reset the file to be empty
                 //line number = index + 1
-            //If the line number is equal to lineNum, then we put the new object there
-            //Else, we add in the normal object in JSONArray
+                //If the line number is equal to lineNum, then we put the new object there
+                //Else, we add in the normal object in JSONArray
 
-            //We now have the JSONArray
-            var reader = BufferedReader(InputStreamReader(openFileInput("TestFile.txt")))
-            var line = reader.readLine()
-            var entries = JSONArray()
-            while(line != null){
-                val sb = StringBuilder()
-                sb.append(line)  //Might need to use sb.append(line).append("\n") if error
-                val jsonObject = JSONObject(sb.toString())
-                entries.put(jsonObject)
-                line = reader.readLine()
-            }
-            reader.close()
-            //Reset file to be empty
-            var writer = BufferedWriter(OutputStreamWriter(openFileOutput("TestFile.txt", Context.MODE_PRIVATE)))
-            writer.write("")
-            //If lifeNum is right, place new. Else add in normal JSONArray object
-            writer = BufferedWriter(OutputStreamWriter(openFileOutput("TestFile.txt", Context.MODE_APPEND)))
-            for(i in 0 until entries.length()){
-                //If the line doesn't equal the deleteObj, then let's add it
-                val currentLine = i + 1
-                if(currentLine == lineNum){
-                    writer.write(entry)
-                    writer.write("\n")
-                } else {
-                    writer.write(entries.getJSONObject(i).toString())
-                    writer.write("\n")
+                //We now have the JSONArray
+                var reader = BufferedReader(InputStreamReader(openFileInput("TestFile.txt")))
+                var line = reader.readLine()
+                var entries = JSONArray()
+                while(line != null){
+                    val sb = StringBuilder()
+                    sb.append(line)  //Might need to use sb.append(line).append("\n") if error
+                    val jsonObject = JSONObject(sb.toString())
+                    entries.put(jsonObject)
+                    line = reader.readLine()
                 }
-            }
-            writer.close()
+                reader.close()
 
-            //Finish and go back to previous page
-            finish()
+                //Reset file to be empty
+                var writer = BufferedWriter(OutputStreamWriter(openFileOutput("TestFile.txt", Context.MODE_PRIVATE)))
+                writer.write("")
+
+                //If lifeNum is right, place new. Else add in normal JSONArray object
+                writer = BufferedWriter(OutputStreamWriter(openFileOutput("TestFile.txt", Context.MODE_APPEND)))
+                for(i in 0 until entries.length()){
+                    //If the line doesn't equal the deleteObj, then let's add it
+                    val currentLine = i + 1
+                    if(currentLine == lineNum){
+                        writer.write(entry)
+                        writer.write("\n")
+                    } else {
+                        writer.write(entries.getJSONObject(i).toString())
+                        writer.write("\n")
+                    }
+                }
+                writer.close()
+
+                //Finish and go back to previous page
+                finish()
+            } else {
+                Toast.makeText(applicationContext,"New expense cannot be empty!",Toast.LENGTH_SHORT).show()
+            }
         }
 
         //Cancel leads back to the main screen
@@ -209,12 +216,12 @@ class EditExpense: AppCompatActivity() {
         val clear = findViewById<View>(R.id.clearButton) as Button
         clear.setOnClickListener {
             category.setSelection(0, true)
-            editTextTextPersonName2.setText(" ")
-            editTextNumberDecimal.setText(" ")
+            categoryTextView.setText("")
+            costEditText.setText("")
             spinner3.setSelection(0, true)
             spinner4.setSelection(0, true)
             spinner5.setSelection(0, true)
-            editTextTextMultiLine.setText(" ")
+            descriptionEditText.setText("")
             Toast.makeText(getApplicationContext(), "Info cleared", Toast.LENGTH_SHORT).show();
         }
     }

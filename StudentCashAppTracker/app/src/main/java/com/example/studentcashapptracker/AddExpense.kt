@@ -1,3 +1,4 @@
+
 package com.example.studentcashapptracker
 
 import android.content.Context
@@ -58,11 +59,11 @@ class AddExpense : AppCompatActivity() {
         val addExpense = findViewById<View>(R.id.addButton) as Button
         addExpense.setOnClickListener {
             val category = spinner.selectedItem
-            val cost = editTextNumberDecimal.text
+            val cost = costEditText.text
             var month = spinner3.selectedItem
             val day = spinner4.selectedItem
             val year = spinner5.selectedItem
-            val description = editTextTextMultiLine.text
+            val description = descriptionEditText.text
 
             when(month){ //Changing the month to a date for displaying later
                 "January" -> month = "1"
@@ -80,42 +81,50 @@ class AddExpense : AppCompatActivity() {
             }
             val date = (month as String) + "/" + (day as String) + "/" + (year as String)
 
+            //Creating a new JSONObject for the entered information
             val jsonObject = JSONObject()
             jsonObject.put("category",category)
             jsonObject.put("cost",cost)
             jsonObject.put("date",date)
             jsonObject.put("description",description)
             jsonObject.put("period",trackPeriod)
-            var entry = jsonObject.toString() //Convert JSON to string
+            var entry = jsonObject.toString()
 
-            if(!getFileStreamPath(FILE_NAME).exists()){
-                try {
-                    val fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE)
+            //Expense is the one field that cannot be null
+            if(cost.toString() != "" && cost.toString() != "0"){
+                //Check if the file exists first
+                if(!getFileStreamPath(FILE_NAME).exists()){
+                    try {
+                        //File doesn't exist, so create it now with this entry
+                        val fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE)
+                        val writer = BufferedWriter(OutputStreamWriter(fos))
+                        writer.write(entry)
+                        writer.write("\n")
+                        writer.close()
+                    } catch (e: FileNotFoundException) {
+                        Log.i(TAG, "FileNotFoundException")
+                    }
+                } else {
+                    //File already exists, so add in this entry
+                    val fos = openFileOutput(FILE_NAME,Context.MODE_APPEND)
                     val writer = BufferedWriter(OutputStreamWriter(fos))
                     writer.write(entry)
                     writer.write("\n")
                     writer.close()
-                } catch (e: FileNotFoundException) {
-                    Log.i(TAG, "FileNotFoundException")
                 }
-            } else {
-                //File already exists
-                val fos = openFileOutput(FILE_NAME,Context.MODE_APPEND)
-                val writer = BufferedWriter(OutputStreamWriter(fos))
-                writer.write(entry)
-                writer.write("\n")
-                writer.close()
-            }
 
-            //Resets fields and creates Toast notifying success
-            spinner.setSelection(0, true)
-            editTextTextPersonName2.setText("")
-            editTextNumberDecimal.setText("")
-            spinner3.setSelection(0, true)
-            spinner4.setSelection(0, true)
-            spinner5.setSelection(0, true)
-            editTextTextMultiLine.setText("")
-            Toast.makeText(getApplicationContext(), "Expense added!", Toast.LENGTH_SHORT).show()
+                //Resets fields and creates Toast notifying success
+                spinner.setSelection(0, true)
+                categoryTextView.setText("")
+                costEditText.setText("")
+                spinner3.setSelection(0, true)
+                spinner4.setSelection(0, true)
+                spinner5.setSelection(0, true)
+                descriptionEditText.setText("")
+                Toast.makeText(getApplicationContext(), "Expense added!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext,"Expense cannot be empty!",Toast.LENGTH_SHORT).show()
+            }
         }
 
         //Cancel leads back to the main screen
@@ -128,13 +137,14 @@ class AddExpense : AppCompatActivity() {
         val clear = findViewById<View>(R.id.clearButton) as Button
         clear.setOnClickListener {
             spinner.setSelection(0, true)
-            editTextTextPersonName2.setText("")
-            editTextNumberDecimal.setText("")
+            categoryTextView.setText("")
+            costEditText.setText("")
             spinner3.setSelection(0, true)
             spinner4.setSelection(0, true)
             spinner5.setSelection(0, true)
-            editTextTextMultiLine.setText("")
+            descriptionEditText.setText("")
             Toast.makeText(getApplicationContext(), "Info cleared", Toast.LENGTH_SHORT).show();
         }
+
     }
 }

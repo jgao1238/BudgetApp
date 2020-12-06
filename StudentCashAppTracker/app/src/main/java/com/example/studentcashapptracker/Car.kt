@@ -28,13 +28,15 @@ class Car: AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //Enable back button
     }
 
-    //Might need to update the list view in onStart
+    //Setup is done in onStart because we want to reload the data
     override fun onStart() {
-        var entries = JSONArray()
-        var pageEntries = JSONArray()
+        var entries = JSONArray() //Overall file's JSON entries
+        var pageEntries = JSONArray() //JSON entries relevant to this page
         var trackPeriod = intent.getIntExtra("TRACKING_PERIOD",0)
-        val list: MutableList<HashMap<String,String>> = ArrayList()
+        val list: MutableList<HashMap<String,String>> = ArrayList() //Will be used to display relevant entries in adapter
+
         try {
+            //Entries will store the JSON objects in the main file
             val reader = BufferedReader(InputStreamReader(openFileInput("TestFile.txt")))
             var line = reader.readLine()
             while(line != null){
@@ -44,7 +46,8 @@ class Car: AppCompatActivity(){
                 line = reader.readLine()
             }
             reader.close()
-            //Tutorial: MultiLine ListView Adapter
+
+            //We are converting the relevant objects to a hashMap in a list to display using a SimpleAdapter
             for(i in 0 until entries.length()){
                 val entry = entries.getJSONObject(i)
                 if(entry.get("period").toString().toInt() == trackPeriod && entry.get("category").toString() == "Car"){
@@ -56,38 +59,44 @@ class Car: AppCompatActivity(){
                     list.add(item)
                 }
             }
+
+            //Create the list view with the SimpleAdapter
             val adapt = object: SimpleAdapter(this,list, R.layout.display_entries, arrayOf("line1","line2","line3"),
-                intArrayOf(R.id.line1,R.id.line2,R.id.line3)) { //Tutorial: StackOverFlow on SimpleAdapter Button
+                intArrayOf(R.id.line1,R.id.line2,R.id.line3)) {
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
                     val v: View = super.getView(position, convertView, parent)
-                    val editButton: Button = v.findViewById<Button>(R.id.editButton)
+
+                    //Create Edit Button functionality for each item
+                    val editButton: Button = v.findViewById(R.id.editButton)
                     editButton.setOnClickListener{
                         val editObj = pageEntries.getJSONObject(position)
+
                         val edit = Intent(this@Car, EditExpense::class.java)
+
+                        //Need to pass in this object's data to the edit menu to populate the fields
                         edit.putExtra("category",editObj.get("category").toString())
                         edit.putExtra("cost",editObj.get("cost").toString().toDouble())
                         edit.putExtra("date",editObj.get("date").toString())
                         edit.putExtra("description",editObj.get("description").toString())
                         edit.putExtra("period",editObj.get("period").toString().toInt()) //not letting them edit but when overriding we need this for the new JSON
-
-                        //We need to compute the line number of this
-                        var lineNum = 1
+                        var lineNum = 1 //We need to compute the line number because we are replacing this line in the file
                         for(i in 0 until entries.length()){
+                            //If the JSON matches the file, then stop incrementing line numbers
                             if(entries.getJSONObject(i).toString() == editObj.toString()){
-                                //Our view matches the line number, so break
                                 break
                             } else {
-                                //It is not a match, so increase the line number count by 1
                                 lineNum += 1
                             }
                         }
                         edit.putExtra("lineNum",lineNum)
 
                         startActivity(edit)
-
                     }
+
+                    //Create Delete button functionality for each item
                     val deleteButton: Button = v.findViewById<Button>(R.id.deleteButton)
                     deleteButton.setOnClickListener{
+                        //Create an Alert to make sure sure the user actually wants to delete an expense
                         val builder = AlertDialog.Builder(this@Car)
                         builder.setTitle("Delete Expense")
                         builder.setMessage("Are you sure you want to delete this expense?")
@@ -98,6 +107,8 @@ class Car: AppCompatActivity(){
                             var fos = openFileOutput("TestFile.txt",Context.MODE_PRIVATE)
                             var writer = BufferedWriter(OutputStreamWriter(fos))
                             writer.write("")
+                            //Now that the file is clear, we need to go through the file
+                            //and write in every JSON except for the current view
                             fos = openFileOutput("TestFile.txt", Context.MODE_APPEND)
                             writer = BufferedWriter(OutputStreamWriter(fos))
                             for(i in 0 until entries.length()){
@@ -124,6 +135,7 @@ class Car: AppCompatActivity(){
                 }
             }
 
+            //Set the listView to our adapter
             val testing = findViewById<ListView>(R.id.carList)
             testing.adapter = adapt
         } catch(e: IOException){

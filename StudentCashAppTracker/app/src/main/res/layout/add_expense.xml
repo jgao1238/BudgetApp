@@ -12,13 +12,13 @@
         android:layout_marginStart="44dp"
         android:layout_marginEnd="16dp"
         android:text="Category:"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editTextTextPersonName2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/categoryTextView"
         app:layout_constraintEnd_toStartOf="@+id/spinner"
         app:layout_constraintStart_toStartOf="parent" />
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/categoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
@@ -36,7 +36,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:text="Cost:"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editTextNumberDecimal"
+        app:layout_constraintBaseline_toBaselineOf="@+id/costEditText"
         app:layout_constraintEnd_toEndOf="@+id/textView4"
         app:layout_constraintStart_toStartOf="@+id/textView5" />
 
@@ -50,20 +50,20 @@
         android:text="Date: "
         app:layout_constraintEnd_toStartOf="@+id/spinner3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberDecimal" />
+        app:layout_constraintTop_toBottomOf="@+id/costEditText" />
 
     <EditText
-        android:id="@+id/editTextNumberDecimal"
+        android:id="@+id/costEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintStart_toStartOf="@+id/categoryTextView"
+        app:layout_constraintTop_toBottomOf="@+id/categoryTextView" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/descriptionEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -107,7 +107,7 @@
         android:text="Add"
         android:background="@drawable/addbutton"
         app:layout_constraintBottom_toTopOf="@+id/clearButton"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintEnd_toEndOf="@+id/descriptionEditText" />
 
     <Button
         android:id="@+id/cancelButton"
@@ -118,7 +118,7 @@
         android:text="Cancel"
         android:background="@drawable/cancelbutton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEditText" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -128,7 +128,7 @@
         android:layout_marginEnd="91dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toTopOf="@+id/categoryTextView" />
 
     <Spinner
         android:id="@+id/spinner3"
@@ -138,7 +138,7 @@
         android:layout_marginEnd="118dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberDecimal" />
+        app:layout_constraintTop_toBottomOf="@+id/costEditText" />
 
     <Spinner
         android:id="@+id/spinner4"
