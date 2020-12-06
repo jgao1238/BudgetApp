@@ -124,11 +124,11 @@ class PreviousPeriodsDetail : AppCompatActivity() {
                     }
                 }
             } //Load the value into each button now
-            foodButton.setText("Food: $" + mFood.toString())
-            rentButton.setText("Rent: $" + mRent.toString())
-            carButton.setText("Car: $" + mCar.toString())
-            schoolButton.setText("School: $" + mSchool.toString())
-            otherButton.setText("Other: $" + mOther.toString())
+            foodButton.setText("Food: $" + String.format("%.2f", mFood))
+            rentButton.setText("Rent: $" + String.format("%.2f", mRent))
+            carButton.setText("Car: $" + String.format("%.2f", mCar))
+            schoolButton.setText("School: $" + String.format("%.2f", mSchool))
+            otherButton.setText("Other: $" + String.format("%.2f", mOther))
             amtSpent.text = String.format("%.2f", mTotal)
         } catch(e: IOException){
             Log.i(TAG,"IOException")
