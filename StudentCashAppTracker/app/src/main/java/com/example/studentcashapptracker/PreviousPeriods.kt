@@ -59,7 +59,7 @@ class PreviousPeriods: AppCompatActivity(){
                     var item = HashMap<String, String>()
                     item.put("startDateString", "Start Date: $startDate")
                     item.put("endDateString", "End Date: $endDate")
-                    item.put("totalExpenseString", "Total Expenses: " + String.format("%.2f", totalCost.toString()))
+                    item.put("totalExpenseString", "Total Expenses: " + String.format("%.2f", totalCost))
                     item.put("trackingPeriod", "$trackingPeriod")
                     list.add(item)
 

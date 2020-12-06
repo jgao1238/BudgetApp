@@ -27,6 +27,7 @@ import kotlin.properties.Delegates
 //TODO: editing and deleting entries for time period <-- doing right now
 //TODO: display history of periods (Sanders)
 //TODO: fill out HTML template (video, sources, citations/comments)
+//TODO: peer review doc
 
 class MainActivity : AppCompatActivity() {
     private lateinit var build: AlertDialog.Builder
