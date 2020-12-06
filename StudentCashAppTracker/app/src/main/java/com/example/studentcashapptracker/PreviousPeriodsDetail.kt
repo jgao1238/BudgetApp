@@ -84,7 +84,7 @@ class PreviousPeriodsDetail : AppCompatActivity() {
     }
 
     override fun onStart() {
-        //Initializing the total summary at the top + update when we come back from add screen
+        //Initializing the total summary at the top + update when we come from previous expenses screen
         var foodButton = findViewById<Button>(R.id.pastFoodButton)
         var rentButton = findViewById<Button>(R.id.pastRentButton)
         var carButton = findViewById<Button>(R.id.pastCarButton)
@@ -98,7 +98,7 @@ class PreviousPeriodsDetail : AppCompatActivity() {
             var testing = JSONArray()
             while(line != null){
                 val sb = StringBuilder()
-                sb.append(line)  //Might need to use sb.append(line).append("\n") if error
+                sb.append(line)
                 val jsonObject = JSONObject(sb.toString())
                 testing.put(jsonObject)
                 line = reader.readLine()
@@ -107,7 +107,7 @@ class PreviousPeriodsDetail : AppCompatActivity() {
             var mTotal = 0.0; var mFood = 0.0; var mRent = 0.0; var mCar = 0.0; var mSchool = 0.0; var mOther = 0.0;
             for(i in 0 until testing.length()){
                 val entry = testing.getJSONObject(i)
-                //There's going to be a lot of entries, so only add the current period's
+                //There's going to be a lot of entries, so only add the period's
                 if(entry.get("period").toString().toInt() == trackPeriod){
                     var mCost = entry.get("cost").toString().toDouble()
                     mTotal += mCost

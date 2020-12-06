@@ -75,7 +75,7 @@ class PreviousPeriods: AppCompatActivity(){
                     totalCost = 0.0
                     trackingPeriod = entry.get("period").toString().toInt()
                 }
-                //TODO: Smart start date and end date
+                //checks the end date and start date and if they need updating
                 var cost = entry.getString("cost").toString().toDouble()
                 totalCost += cost
 
@@ -131,6 +131,8 @@ class PreviousPeriods: AppCompatActivity(){
         } catch (e: IOException) {
             Log.i("Error in Pevious Period", "IOException")
         }
+
+        //This code is inspired by lab 11
         periodList.onItemClickListener =  AdapterView.OnItemClickListener { _, _, i, _ ->
             var period  = list.get(i)
             var intent = Intent(this@PreviousPeriods, PreviousPeriodsDetail::class.java)
