@@ -248,12 +248,16 @@ class MainActivity : AppCompatActivity() {
 
     //menu dialog
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(trackPeriod > 0) {
-            val previousActivity = Intent(this@MainActivity, PreviousPeriods::class.java)
-            previousActivity.putExtra("CURR_PERIOD", trackPeriod)
-            startActivity(previousActivity)
-        } else {
-
+        try {
+            val testReader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))
+            var line = testReader.readLine()
+            if (line != null) {
+                val previousActivity = Intent(this@MainActivity, PreviousPeriods::class.java)
+                previousActivity.putExtra("CURR_PERIOD", trackPeriod)
+                startActivity(previousActivity)
+            }
+        } catch (e : IOException){
+            Log.i(TAG, "Problem selecting previous periods")
         }
         return true
     }
