@@ -109,12 +109,12 @@ class AddExpense : AppCompatActivity() {
 
             //Resets fields and creates Toast notifying success
             spinner.setSelection(0, true)
-            editTextTextPersonName2.setText(" ")
-            editTextNumberDecimal.setText(" ")
+            editTextTextPersonName2.setText("")
+            editTextNumberDecimal.setText("")
             spinner3.setSelection(0, true)
             spinner4.setSelection(0, true)
             spinner5.setSelection(0, true)
-            editTextTextMultiLine.setText(" ")
+            editTextTextMultiLine.setText("")
             Toast.makeText(getApplicationContext(), "Expense added!", Toast.LENGTH_SHORT).show()
         }
 
@@ -128,12 +128,12 @@ class AddExpense : AppCompatActivity() {
         val clear = findViewById<View>(R.id.clearButton) as Button
         clear.setOnClickListener {
             spinner.setSelection(0, true)
-            editTextTextPersonName2.setText(" ")
-            editTextNumberDecimal.setText(" ")
+            editTextTextPersonName2.setText("")
+            editTextNumberDecimal.setText("")
             spinner3.setSelection(0, true)
             spinner4.setSelection(0, true)
             spinner5.setSelection(0, true)
-            editTextTextMultiLine.setText(" ")
+            editTextTextMultiLine.setText("")
             Toast.makeText(getApplicationContext(), "Info cleared", Toast.LENGTH_SHORT).show();
         }
     }

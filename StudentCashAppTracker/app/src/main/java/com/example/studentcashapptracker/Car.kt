@@ -2,6 +2,7 @@ package com.example.studentcashapptracker
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
@@ -19,7 +20,6 @@ import java.io.*
 
 
 class Car: AppCompatActivity(){
-    //protected lateinit var sharedpreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +46,6 @@ class Car: AppCompatActivity(){
             reader.close()
             //Tutorial: MultiLine ListView Adapter
             for(i in 0 until entries.length()){
-                //sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE)
-                //trackPeriod = sharedpreferences.getInt("trackPeriod",0)
                 val entry = entries.getJSONObject(i)
                 if(entry.get("period").toString().toInt() == trackPeriod && entry.get("category").toString() == "Car"){
                     pageEntries.put(entry)
@@ -64,7 +62,28 @@ class Car: AppCompatActivity(){
                     val v: View = super.getView(position, convertView, parent)
                     val editButton: Button = v.findViewById<Button>(R.id.editButton)
                     editButton.setOnClickListener{
-                        Toast.makeText(applicationContext, "EDIT", Toast.LENGTH_LONG).show()
+                        val editObj = pageEntries.getJSONObject(position)
+                        val edit = Intent(this@Car, EditExpense::class.java)
+                        edit.putExtra("category",editObj.get("category").toString())
+                        edit.putExtra("cost",editObj.get("cost").toString().toDouble())
+                        edit.putExtra("date",editObj.get("date").toString())
+                        edit.putExtra("description",editObj.get("description").toString())
+                        edit.putExtra("period",editObj.get("period").toString().toInt()) //not letting them edit but when overriding we need this for the new JSON
+
+                        //We need to compute the line number of this
+                        var lineNum = 1
+                        for(i in 0 until entries.length()){
+                            if(entries.getJSONObject(i).toString() == editObj.toString()){
+                                //Our view matches the line number, so break
+                                break
+                            } else {
+                                //It is not a match, so increase the line number count by 1
+                                lineNum += 1
+                            }
+                        }
+                        edit.putExtra("lineNum",lineNum)
+
+                        startActivity(edit)
 
                     }
                     val deleteButton: Button = v.findViewById<Button>(R.id.deleteButton)
@@ -74,7 +93,6 @@ class Car: AppCompatActivity(){
                         builder.setMessage("Are you sure you want to delete this expense?")
                         builder.setPositiveButton("Accept", DialogInterface.OnClickListener{ dialog, id ->
                             val deleteObj = pageEntries.getJSONObject(position).toString()
-                            //Toast.makeText(applicationContext, position.toString(), Toast.LENGTH_SHORT).show()
 
                             //Clear the file because we are rewriting every line except for deleteObj
                             var fos = openFileOutput("TestFile.txt",Context.MODE_PRIVATE)

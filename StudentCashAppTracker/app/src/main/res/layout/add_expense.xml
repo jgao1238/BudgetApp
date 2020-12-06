@@ -24,6 +24,7 @@
         android:layout_marginStart="13dp"
         android:layout_marginTop="81dp"
         android:ems="10"
+        android:editable="false"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />

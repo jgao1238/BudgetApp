@@ -24,8 +24,7 @@ import java.lang.Exception
 import kotlin.properties.Delegates
 
 //Overall task list
-//TODO: editing and deleting entries for time period <-- doing right now
-//TODO: display history of periods (Sanders)
+//TODO: editing entries
 //TODO: fill out HTML template (video, sources, citations/comments)
 //TODO: peer review doc
 

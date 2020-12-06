@@ -24,6 +24,7 @@
         android:layout_marginStart="13dp"
         android:layout_marginTop="81dp"
         android:ems="10"
+        android:editable="false"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
@@ -103,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="36dp"
-        android:text="Accept"
+        android:text="Update"
         android:background="@drawable/addbutton"
         app:layout_constraintBottom_toTopOf="@+id/clearButton"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLine" />
