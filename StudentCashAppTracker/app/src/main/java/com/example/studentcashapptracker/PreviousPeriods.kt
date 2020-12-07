@@ -16,6 +16,7 @@ import java.io.InputStreamReader
 class PreviousPeriods: AppCompatActivity(){
     private val FILE_NAME = "TestFile.txt"
     private var list : MutableList<HashMap<String,String>> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,6 +24,7 @@ class PreviousPeriods: AppCompatActivity(){
 
         val periodList = findViewById<ListView>(R.id.periodList)
 
+        //Source referenced: Read and parse data with JSON
         //Read in the file to make a JSONArray of entries
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))
@@ -127,6 +129,7 @@ class PreviousPeriods: AppCompatActivity(){
                 list.add(item)
             }
 
+            //Source referenced: Multi-line ListView
             val adapt = SimpleAdapter(
                 this, list, R.layout.previous_periods,
                 arrayOf("startDateString", "endDateString", "totalExpenseString"),

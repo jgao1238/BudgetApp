@@ -93,6 +93,7 @@ class PreviousPeriodsDetail : AppCompatActivity() {
         var otherButton = findViewById<Button>(R.id.pastOtherButton)
         var amtSpent = findViewById<TextView>(R.id.pastAmountSpentValue)
 
+        //Source referenced: Read and parse data with JSON
         //Read JSON values
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))

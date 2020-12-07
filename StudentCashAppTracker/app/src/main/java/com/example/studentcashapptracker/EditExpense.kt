@@ -31,6 +31,7 @@ class EditExpense: AppCompatActivity() {
         var trackPeriod = intent.getIntExtra("period",0)
         var lineNum = intent.getIntExtra("lineNum",0)
 
+        //Source referenced: Spinner
         //set up the category spinner
         val category: Spinner = findViewById(R.id.spinner)
         ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item).also { adapter ->
@@ -150,6 +151,7 @@ class EditExpense: AppCompatActivity() {
             }
             val date = (month as String) + "/" + (day as String) + "/" + (year as String)
 
+            //Source referenced: Read and parse data with JSON
             //Create a new json object
             val jsonObject = JSONObject()
             jsonObject.put("category",category)

@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        //Source referenced: Seekbar
         //Change the EditText if the seekBar changes
         maxBudget.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -183,6 +184,7 @@ class MainActivity : AppCompatActivity() {
         var otherButton = findViewById<Button>(R.id.otherButton)
         var amtSpent = findViewById<TextView>(R.id.amountSpentValue)
 
+        //Source referenced: Read and parse data with JSON
         //Reading in JSON values
         try {
             val reader = BufferedReader(InputStreamReader(openFileInput(FILE_NAME)))

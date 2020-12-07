@@ -33,6 +33,7 @@ class Rent: AppCompatActivity(){
         var trackPeriod = intent.getIntExtra("TRACKING_PERIOD",0)
         val list: MutableList<HashMap<String,String>> = ArrayList() //Will be used to display relevant entries in adapter
 
+        //Source referenced as a basis: Read and parse data with JSON
         try {
             //Entries will store the JSON objects in the main file
             val reader = BufferedReader(InputStreamReader(openFileInput("TestFile.txt")))
@@ -58,9 +59,11 @@ class Rent: AppCompatActivity(){
                 }
             }
 
+            //Source referenced: Multi-line ListView
             //Create the list view with the SimpleAdapter
             val adapt = object: SimpleAdapter(this,list, R.layout.display_entries, arrayOf("line1","line2","line3"),
                 intArrayOf(R.id.line1,R.id.line2,R.id.line3)) {
+                //Source referenced: ListAdapter Button
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
                     val v: View = super.getView(position, convertView, parent)
 
@@ -118,12 +121,16 @@ class Rent: AppCompatActivity(){
                             }
                             writer.close()
 
+                            //Source referenced: Remove from ListView
                             //Remove view and update the screen
                             list.removeAt(position)
                             notifyDataSetChanged()
+                            //Source referenced: Reload Actvitiy
                             //Refresh this activity to reload all correct values
                             finish();
+                            overridePendingTransition(0, 0);
                             startActivity(getIntent());
+                            overridePendingTransition(0, 0);
                         })
                         builder.setNegativeButton("Cancel", DialogInterface.OnClickListener{ dialog, id ->
                         })
