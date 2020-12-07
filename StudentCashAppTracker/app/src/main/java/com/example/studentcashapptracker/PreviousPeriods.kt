@@ -91,14 +91,14 @@ class PreviousPeriods: AppCompatActivity(){
                 dateInts.add(1, dateTransfer.get(1).toInt())
                 dateInts.add(2, dateTransfer.get(2).toInt())
 
-                //Load's each end and start date for periods
+                //Loads each end and start date for periods
                 if (dateInts.get(2) > endDateInts.get(2)) {
                     endDateInts = dateInts
                     endDate = date
-                } else if (dateInts.get(0) > endDateInts.get(0)) {
+                } else if (dateInts.get(0) > endDateInts.get(0) && dateInts.get(2) == endDateInts.get(2)) {
                     endDateInts = dateInts
                     endDate = date
-                } else if (dateInts.get(1) > endDateInts.get(1)) {
+                } else if (dateInts.get(1) > endDateInts.get(1) && dateInts.get(0) == endDateInts.get(0) && dateInts.get(2) == endDateInts.get(2)) {
                     endDateInts = dateInts
                     endDate = date
                 }
@@ -106,10 +106,10 @@ class PreviousPeriods: AppCompatActivity(){
                 if (startDateInts.get(2) > dateInts.get(2)) {
                     startDateInts = dateInts
                     startDate = date
-                } else if (startDateInts.get(0) > dateInts.get(0)) {
+                } else if (startDateInts.get(0) > dateInts.get(0) && startDateInts.get(2) == dateInts.get(2)) {
                     startDateInts = dateInts
                     startDate = date
-                } else if (startDateInts.get(1) > dateInts.get(1)) {
+                } else if (startDateInts.get(1) > dateInts.get(1) && startDateInts.get(0) == dateInts.get(0) && startDateInts.get(2) == dateInts.get(2)) {
                     startDateInts = dateInts
                     startDate = date
                 }
